@@ -1,0 +1,6 @@
+[client]
+workdir=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_client
+listen=172.16.42.63
+port=9300
+conn_num=50
+data_size=1020

@@ -1,0 +1,81 @@
+# Required initializer
+AC_INIT
+
+# Automake initialization
+AM_INIT_AUTOMAKE(cwinux, 1.0)
+
+# Add a test for a compiler.
+m4_include([ax_cxx_compile_stdcxx_0x.m4])
+
+AC_PROG_CC
+AM_PROG_LIBTOOL
+AX_CXX_COMPILE_STDCXX_0X
+if test "x$ax_cv_cxx_compile_cxx0x_cxx" = "xyes" ; then
+    CXXFLAGS="$CXXFLAGS -std=c++0x"
+fi
+
+AC_DEFUN([THRIFT_DIR],[
+
+    AC_ARG_WITH(
+        thrift,
+        [  --with-thrift[=DIR]        thrift directory],
+        ,
+        [with_thrift="no"]
+    )
+
+    AC_MSG_CHECKING(for thrift directory)
+
+    if test "$with_thrift" != "no"; then
+        # make sure that a well known include file exists
+        if test -e $with_thrift/Thrift.h; then
+            thrift_dir=$with_thrift
+            AC_MSG_RESULT(thrift found!)
+        else
+            AC_MSG_ERROR( $with_thrift not found.  Check the value you specified with --with-thrift)
+        fi
+    fi
+    AC_ARG_WITH(
+        gflags,
+        [  --with-gflags[=DIR]        gflags directory],
+        ,
+        [with_gflags="no"]
+    )
+
+    AC_MSG_CHECKING(for gflags directory)
+
+    if test "$with_gflags" != "no"; then
+        # make sure that a well known include file exists
+        if test -e $with_gflags/gflags.h; then
+            gflags_dir=$with_gflags
+            AC_MSG_RESULT(gflags found!)
+        else
+            AC_MSG_ERROR( $with_gflags not found.  Check the value you specified with --with-gflags)
+        fi
+    fi
+])
+
+THRIFT_DIR
+
+
+if test "$with_thrift" != "no"; then
+AC_DEFINE(WITH_CWINUX_THRIFT)
+AC_SUBST(thrift_dir)
+fi
+if test "$with_gflags" != "no"; then
+AC_DEFINE(WITH_CWINUX_GFLAGS)
+AC_SUBST(gflags_dir)
+fi
+AC_DEFINE(_LARGEFILE64_SOURCE)
+AC_DEFINE(_FILE_OFFSET_BITS,64)
+AC_DEFINE(_LARGEFILE64_SOURCE)
+AC_DEFINE(_REENTRANT)
+AC_DEFINE(_GNU_SOURC)
+
+
+# The AC_SUBST macro causes the variable to be saved in config.status
+
+# Write config.status and the Makefile
+AC_OUTPUT(Makefile)
+AC_OUTPUT(lib/cmn/src/Makefile)
+AC_OUTPUT(lib/net/src/Makefile)
+AC_OUTPUT(lib/app/src/Makefile)

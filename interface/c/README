@@ -1,0 +1,1 @@
+./configure --with-libevent=/usr/local/ --with-xml-expat=/usr --with-cwinux=/usr/home/wenbo/install --prefix=/usr/home/wenbo/install/

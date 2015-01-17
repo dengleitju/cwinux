@@ -1,0 +1,6 @@
+[svr]
+workdir=/home/dwb/cwinux/cwinux/trunk/cwinux/example/echo_protobuf/echo_svr
+listen=127.0.0.1
+port=9300
+unix=/home/dwb/cwinux/cwinux/trunk/cwinux/example/echo_protobuf/echo_svr/echo.unix
+thread_num=2

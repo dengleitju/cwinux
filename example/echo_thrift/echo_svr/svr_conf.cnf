@@ -1,0 +1,5 @@
+[svr]
+workdir=/home/diaowenbo/opensource/cwinux/cwinux/example/echo_thrift/echo_svr
+listen=127.0.0.1
+port=9300
+thread_num=20

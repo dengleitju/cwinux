@@ -1,0 +1,59 @@
+*********************************************************************
+2010-10-15    cwinux@gmail.com   v1.1
+store模块的CwxBinLogMgr，增加了读写锁，支持写排他，读并发。
+同时，则加了系统lock文件，防止多个服务多次打开。
+*********************************************************************
+2010-10-15    cwinux@gmail.com   v1.1
+app模块的CwxAppThreadPoolEx类，增加了基于thread-id获取消息的接口：
+inline size_t getQueuedMsgNum(CWX_UINT16 unThreadIndex);
+*********************************************************************
+2010-11-5    cwinux@gmail.com   v1.2.1
+store模块的CwxBinLogFile类，修改sid的折半查找算法的bug，缺少+-1，api为：
+int CwxBinLogFile::seek(CwxBinLogCursor& cursor, CWX_UINT8 ucMode);
+*********************************************************************
+2011-5-04    cwinux@gmail.com   v2.0
+CwxThreadPoolEx对象的m_threadArr成员没有创建，造成线程start()的时候core。
+在int CwxThreadPoolEx::start(CwxTss** pThrEnv, size_t stack_size)中增加了
+m_threadArr = new CwxThread*[getThreadNum()];的代码。
+*********************************************************************
+2011-5-16    cwinux@gmail.com   v2.0
+CwxLruCache对象的定义错误。
+旧：template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize(KEY), typename DSIZE=CwxSize(DATA) >
+
+新：template<typename KEY, typename DATA, typename HASH=hash<KEY>, typename EQUAL=equal_to<KEY>, typename KSIZE=CwxSize<KEY>, typename DSIZE=CwxSize<DATA> >
+
+*********************************************************************
+2011-5-16    cwinux@gmail.com   v2.0
+增加了util/CwxCrc32的对象，对应的文件为util/include/CwxCrc32.h、util/src/CwxCrc32.cpp。
+*********************************************************************
+2011-5-30    cwinux@gmail.com   v2.0
+修改了CwxEpoll的signal方面的bug。此bug造成收到signal后，没有清空signal fd中写入的字符，epoll进入循环。
+*********************************************************************
+2011-6-20    cwinux@gmail.com   v2.0.2
+修改了util/CwxMd5及util/CwxCrc32的签名bug。
+*********************************************************************
+2011-6-27    cwinux@gmail.com   v2.0.6
+修改了CwxAppHandler4Channel类，当连接关闭的时候，未发出的消息free前，需要首先判断Fail-notice标志，若设置的话需要通知上层。
+*********************************************************************
+2011-6-27    cwinux@gmail.com   v2.0.6
+修改了CwxAppHandler4Channel类，当连接关闭的时候，未发出的消息free前，需要首先判断Fail-notice标志，若设置的话需要通知上层。
+*********************************************************************
+2011-6-27    cwinux@gmail.com   v2.0.6
+修改了CwxAppHandler4Channel::recvPackage()。即便消息的body为0，也需要建立msg对象。
+*********************************************************************
+2011-07-10    cwinux@gmail.com   v2.1.0
+1、CwxBinlogMgr支持write-cache
+2、修改了消息结构，去掉了attr熟悉（多余了，浪费空间）。
+3、binlog 消息文件，最大为2G。不再支持大消息文件。
+*********************************************************************
+2011-10-10    cwinux@gmail.com   v2.1.12
+1、修改CwxAppHandler4Channel::close ，在delete this前，首先检查是否m_bRedo，并cancel redo
+*********************************************************************
+2012-05-08    cwinux@gmail.com   v2.3.2
+1、修改CwxPackage CwxPackageWrite，在addKeyValue的时候，支持指定key的length，新增加了一批api。与旧版本兼容
+*********************************************************************
+2012-10-08    cwinux@gmail.com   v2.3.7
+1、去掉了CwxThreadPoolMgr的类，CwxThreadPool及CwxThreadPoolEx的构造函数无需再知道Thread group id及ThreadPoolMgr
+   此造成了与先前版本的不兼容。
+*********************************************************************
+

@@ -1,0 +1,5 @@
+安装的过程如下
+1.configure --with-apache=apache路径  --with-apr=apache的apr路径 --with-apr-util=apache的apr util路径
+2.make
+3.将.lib目录下的libmod_cwinux.so拷贝到apache的mudules目录下。
+4.根据doc目录下的配置说明，配置apache

@@ -1,0 +1,6 @@
+[svr]
+workdir=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_svr
+listen=172.16.42.63
+port=9300
+unix=/usr/home/wenbo/cwinux/cwinux/trunk/cwinux/example/echo/echo_svr/echo.unix
+thread_num=2
